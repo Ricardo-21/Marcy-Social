@@ -14,32 +14,36 @@
       
                       <i class="fas fa-user-astronaut fa-3x my-5"></i>
       
-                      <div class="form-outline mb-4">
-                        <input type="text" id="firstName" class="form-control form-control-lg" />
-                        <label class="form-label" for="firstName">First Name</label>
-                      </div>
-
-                      <div class="form-outline mb-5">
-                        <input type="text" id="lastName" class="form-control form-control-lg" />
-                        <label class="form-label" for="lastName">Last Name</label>
-                      </div>
-
-                      <div class="form-outline mb-5">
-                        <input type="text" id="username" class="form-control form-control-lg" />
-                        <label class="form-label" for="username">@Username</label>
-                      </div>
-      
-                      <div class="form-outline mb-5">
-                        <input type="password" id="typePassword" class="form-control form-control-lg" />
-                        <label class="form-label" for="typePassword">Password</label>
-                      </div>
-      
-                      <button class="btn btn-primary btn-lg btn-rounded gradient-custom text-body px-5" type="submit">Login</button>
-      
-                    </div>
+                    
+                    <form action="/register" method="post">
+                        <div class="form-outline mb-4">
+                            <input type="text" id="firstName" class="form-control form-control-lg" name = "firstname" required/>
+                            <label class="form-label" for="firstName">First Name</label>
+                        </div>
+    
+                        <div class="form-outline mb-5">
+                            <input type="text" id="lastName" class="form-control form-control-lg" name= "lastname" required/>
+                            <label class="form-label" for="lastName">Last Name</label>
+                        </div>
+    
+                        <div class="form-outline mb-5">
+                            <input type="text" id="username" class="form-control form-control-lg" name = "username" required/>
+                            <label class="form-label" for="username">@Username</label>
+                        </div>
+          
+                        <div class="form-outline mb-5">
+                            <input type="password" id="typePassword" class="form-control form-control-lg" name = "password" required/>
+                            <label class="form-label" for="typePassword">Password</label>
+                        </div>
+          
+                        <button class="btn btn-primary btn-lg btn-rounded gradient-custom text-body px-5" type="submit">Register</button>
+          
+                        </div>
+                    </form>
+                    
       
                     <div>
-                      <p class="mb-0">Don't have an account? <a href="/register" class="text-body fw-bold">Sign Up</a></p>
+                      <p class="mb-0">Have an account? <a href="/login" class="text-body fw-bold">Sign In</a></p>
                     </div>
       
                   </div>
