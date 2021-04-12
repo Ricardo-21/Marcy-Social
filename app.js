@@ -55,15 +55,37 @@ app.get('/register', (req, res) => {
 app.post('/login', async (req, res) => {
     let user = await Auth.getUser(req.body);
     const {username, password} = req.body;
-    debugger;
+    // debugger;
     if(user) {
-        req.session.user = user;
-        res.send(`${username} is logged in`)
+        bcrypt.compare(password, user.encrypted_password, (err, results) =>{
+            if (results) {
+                // the email exists in the db and the password was a match
+                req.session.user = user
+                res.send(`${username} is logged in`)
+                // res.send('Right email and password');
+              } else {
+                res.send("Invalid credentials"); // password is incorrect
+              }
+        })
     }
     else {
         res.send('wrong creds');
     }
 
+})
+
+app.post('/register', async (req, res) => {
+    bcrypt.hash(req.body.password, 10, (err, hash) =>{
+        if(err){
+            res.send("error", error);
+        }
+        else {
+            req.body.encrypt = hash;
+            Auth.register(req.body);
+            // res.send(`Thank you ${req.body.name} for signing up!`)
+            res.redirect('/login');
+        }
+    })
 })
 
 app.listen(PORT, () => {console.log(`Server started on ${PORT}`)});
