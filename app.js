@@ -27,4 +27,8 @@ app.use(session({
 
 app.use('/api', apiRouter);
 
+app.get('/login', (req, res) => {
+    res.render('login')
+})
+
 app.listen(PORT, () => {console.log(`Server started on ${PORT}`)});
