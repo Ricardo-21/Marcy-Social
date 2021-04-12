@@ -2,7 +2,6 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const PORT = process.env.PORT || 8000;
 
-
 const apiRouter = require('./router/apiRouter');
 const appRouter = require('./router/appRouter');
 const {Auth} = require('./models/Auth')

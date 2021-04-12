@@ -3,9 +3,9 @@ const db = require("../db/db");
 class Auth {
 
     static register(body) {
-        let queryText = "INSERT INTO users (username, email, encrypted_password) VALUES ($1, $2, $3);";
+        let queryText = "INSERT INTO users (username, encrypted_password) VALUES ($1, $2, $3);";
 
-        db.query(queryText, [body.name, body.email, body.encrypt])
+        db.query(queryText, [body.name, body.encrypt])
     }
 
     static getUser(body) {
