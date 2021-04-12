@@ -4,7 +4,7 @@ const PORT = process.env.PORT || 8000;
 
 
 const apiRouter = require('./router/apiRouter');
-// const appRouter = require('./router/appRouter');
+const appRouter = require('./router/appRouter');
 // const {Auth} = require('./models/Auth')
 
 const app = express();
@@ -26,5 +26,11 @@ app.use(session({
 }))
 
 app.use('/api', apiRouter);
+app.use('/', (req, res, next) => {
+    console.log(req.method, req.path);
+    next();
+})
+
+app.use("/", appRouter);
 
 app.listen(PORT, () => {console.log(`Server started on ${PORT}`)});
