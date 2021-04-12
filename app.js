@@ -33,4 +33,8 @@ app.use('/', (req, res, next) => {
 
 app.use("/", appRouter);
 
+app.get('/login', (req, res) => {
+    res.render('login')
+})
+
 app.listen(PORT, () => {console.log(`Server started on ${PORT}`)});
