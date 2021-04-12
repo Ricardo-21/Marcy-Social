@@ -4,8 +4,8 @@ const PORT = process.env.PORT || 8000;
 
 
 const apiRouter = require('./router/apiRouter');
-// const appRouter = require('./router/appRouter');
-// const {Auth} = require('./models/Auth')
+const appRouter = require('./router/appRouter');
+const {Auth} = require('./models/Auth')
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -26,6 +26,12 @@ app.use(session({
 }))
 
 app.use('/api', apiRouter);
+app.use('/', (req, res, next) => {
+    console.log(req.method, req.path);
+    next();
+})
+
+app.use("/", appRouter);
 
 
 app.get("/", (req, res) => {
@@ -43,6 +49,21 @@ app.get('/login', (req, res) => {
 
 app.get('/register', (req, res) => {
     res.render('register')
+})
+
+
+app.post('/login', async (req, res) => {
+    let user = await Auth.getUser(req.body);
+    const {username, password} = req.body;
+    debugger;
+    if(user) {
+        req.session.user = user;
+        res.send(`${username} is logged in`)
+    }
+    else {
+        res.send('wrong creds');
+    }
+
 })
 
 app.listen(PORT, () => {console.log(`Server started on ${PORT}`)});

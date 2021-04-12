@@ -1,7 +1,7 @@
 <%- include("./layouts/header"); -%>
 <body>
     <section class="intro">
-        <div class="mask d-flex align-items-center h-100" style="background-color: #D6D6D6;">
+        <div class="mask d-flex align-items-center h-100" style="background-color: #0b0775;">
           <div class="container">
             <div class="row justify-content-center">
               <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -10,26 +10,29 @@
       
                     <div class="my-md-5 pb-5">
       
-                      <h1 class="fw-bold mb-0">Welcome</h1>
+                        <h1 class="fw-bold mb-0">Welcome</h1>
       
-                      <i class="fas fa-user-astronaut fa-3x my-5"></i>
-      
-                      <div class="form-outline mb-4">
-                        <input type="email" id="username" class="form-control form-control-lg" />
-                        <label class="form-label" for="username">Username</label>
-                      </div>
-      
-                      <div class="form-outline mb-5">
-                        <input type="password" id="typePassword" class="form-control form-control-lg" />
-                        <label class="form-label" for="typePassword">Password</label>
-                      </div>
-      
-                      <button class="btn btn-primary btn-lg btn-rounded gradient-custom text-body px-5" type="submit">Login</button>
+                        <!-- <i class="fas fa-user-astronaut fa-3x my-5"></i> -->
+                        <img src="https://static1.squarespace.com/static/5c470f01697a9873eb02abb8/t/5c47125c4d7a9ccfd0d9864c/1605908373852/?format=1500w" style="margin-bottom: 20px">
+                    <form action="/login" method="POST">
+                        <div class="form-outline mb-4">
+                            <input type="text" id="username" class="form-control form-control-lg" name = "username"/>
+                            <label class="form-label" for="username">Username</label>
+                        </div>
+          
+                        <div class="form-outline mb-5">
+                            <input type="password" id="password" class="form-control form-control-lg" name = "password"/>
+                            <label class="form-label" for="password">Password</label>
+                        </div>
+          
+                        <button class="btn btn-primary btn-lg btn-rounded gradient-custom text-body px-5" type="submit">Login</button>
+                    </form>
+                      
       
                     </div>
       
                     <div>
-                      <p class="mb-0">Don't have an account? <a href="/register" class="text-body fw-bold">Sign Up</a></p>
+                        <p class="mb-0">Don't have an account? <a href="/register" class="text-body fw-bold">Sign Up</a></p>
                     </div>
       
                   </div>
