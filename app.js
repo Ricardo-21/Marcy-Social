@@ -27,8 +27,22 @@ app.use(session({
 
 app.use('/api', apiRouter);
 
+
+app.get("/", (req, res) => {
+    const {user} = req.session;
+    if(user) {
+      res.render("home", {title: 'Welcome ' + user.username})
+    } else {
+      res.redirect("/login")
+    }
+  });
+
 app.get('/login', (req, res) => {
     res.render('login')
+})
+
+app.get('/register', (req, res) => {
+    res.render('register')
 })
 
 app.listen(PORT, () => {console.log(`Server started on ${PORT}`)});
