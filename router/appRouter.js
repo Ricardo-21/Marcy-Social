@@ -4,11 +4,14 @@ const usersController = require('../controllers/usersController');
 const {Auth} = require('../models/Auth')
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const {Post} = require('../models/Post');
 
 router.get('/', async (req, res) => {
     const user = req.session.user;
+    const posts = await Post.allPosts()
     if(user) {
-        res.render('home')
+        debugger;
+        res.render('home', {posts})
     }
     else {
         res.redirect('/login');

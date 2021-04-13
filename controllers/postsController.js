@@ -1,9 +1,16 @@
-const {Post} = require('../models/Posts');
+const {Post} = require('../models/Post');
 const {Auth} = require('../models/Auth');
 
 const allPosts = async (req, res) => {
     let posts = await Post.allPosts();
-    res.status(200).render('home')
+
+    for(let i = 0; i < posts.length; i ++) {
+        let likes = await Post.getLikes(posts[i].id);
+        posts[i].likes = parseInt(likes.count);
+        
+    }
+
+    res.status(200).render('home', {posts})
 }
 
 const getAllPosts = async (req, res) => {

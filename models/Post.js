@@ -1,6 +1,11 @@
 const db = require('../db/db');
 
 class Post {
+    static allPosts(){
+        let queryText = 'SELECT * FROM posts'
+        return db.query(queryText).then(posts => posts.rows);
+    }
+
     static getAllPosts() {
         const queryText = "SELECT * FROM posts ORDER BY id DESC";
 
