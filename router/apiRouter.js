@@ -23,4 +23,7 @@ router.patch('/posts/:id/like', postsController.likePostAPI);
 
 router.post('/posts/:id/comment', postsController.createCommentAPI);
 
+router.delete('/comments/:id', postsController.deleteCommentAPI);
+
+router.get('/comments', postsController.getComments);
 module.exports = router;

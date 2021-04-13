@@ -181,6 +181,40 @@ const createCommentAPI = async (req, res) => {
     }
 }
 
+const getComments = async (req, res) => {
+    let comments = await Post.getAllComments();
+
+    res.json(comments);
+}
+
+const deleteCommentAPI = async (req, res) => {
+    let api_key = req.headers['x-api-key'];
+    let comment = await Post.getComment(req.params.id);
+    let user = await Auth.getUserApi(api_key);
+    if(api_key) {
+        if(user) {
+            if(comment) {
+                if(comment.user_id == user.id) {
+                    Post.deleteComment(comment.id);
+                    res.send(`Comment with id: ${comment.id} has been deleted`);
+                }
+                else {
+                    res.send('You do not own this comment');
+                }
+            }
+            else {
+                res.send('Comment does not exist');
+            }
+        }
+        else {
+            res.send('Invalid API KEY')
+        }
+    }
+    else {
+        res.send('Please provide api-key to headers using X-API-KEY')
+    }
+}
+
 module.exports = {
     getAllPosts,
     getPost,
@@ -189,5 +223,7 @@ module.exports = {
     editPostAPI,
     likePostAPI,
     createCommentAPI,
-    allPosts
+    allPosts,
+    deleteCommentAPI,
+    getComments
 }

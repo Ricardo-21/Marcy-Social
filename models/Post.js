@@ -18,10 +18,28 @@ class Post {
         return db.query(queryText, [post_id]).then(post => post.rows[0]);
     }
 
+    static getAllComments() {
+        const queryText ="SELECT comments.id, username, user_id, initial_comment FROM comments, users WHERE user_id = users.id ORDER BY comments.id ASC"
+
+        return db.query(queryText).then(comments => comments.rows);
+    }
+
     static getComments(post_id) {
         const queryText = "SELECT comments.id, username, user_id, initial_comment FROM comments, users WHERE post_id = $1 AND user_id = users.id ORDER BY comments.id ASC";
 
         return db.query(queryText, [post_id]).then(comments => comments.rows);
+    }
+
+    static getComment(comment_id) {
+        const queryText = "SELECT * FROM comments WHERE id = $1";
+
+        return db.query(queryText, [comment_id]).then(comment => comment.rows[0]);
+    }
+
+    static deleteComment(comment_id) {
+        const queryText = "DELETE FROM comments WHERE id = $1";
+
+        db.query(queryText, [comment_id]);
     }
 
     static addComment(post_id, user_id, comment) {
