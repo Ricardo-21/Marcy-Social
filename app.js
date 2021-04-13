@@ -81,6 +81,8 @@ app.post('/register', async (req, res) => {
         }
         else {
             req.body.encrypt = hash;
+            const apiKey = Auth.generateApi();
+            req.body.api = apiKey;
             Auth.register(req.body);
             // res.send(`Thank you ${req.body.name} for signing up!`)
             res.redirect('/login');

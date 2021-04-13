@@ -10,7 +10,8 @@ CREATE TABLE users (
     username TEXT,
 	photo_src TEXT,
     encrypted_password TEXT,
-	bio TEXT
+	bio TEXT,
+    api_key TEXT
     );
 
 CREATE TABLE posts (
@@ -18,7 +19,8 @@ CREATE TABLE posts (
 	user_id INT REFERENCES users(id),
     title TEXT,
     descr TEXT, 
-    project_link TEXT
+    project_link TEXT,
+    code_block TEXT
     );
 	
 CREATE TABLE comments (

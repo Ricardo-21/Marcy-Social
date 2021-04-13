@@ -6,6 +6,17 @@ class User {
 
         return db.query(queryText).then(users => users.rows);
     }
+
+    static getUser(user_id) {
+        const queryText = "SELECT id, username, firstname, lastname, photo_src, bio FROM users WHERE id = $1";
+        return db.query(queryText, [user_id]).then(user => user.rows[0]);
+    }
+
+    static getPostsAPI(user_id) {
+        const queryText = "SELECT * FROM posts WHERE user_id = $1";
+
+        return db.query(queryText, [user_id]).then(posts => posts.rows);
+    }
 }
 
 module.exports = {User};
