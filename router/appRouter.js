@@ -76,4 +76,9 @@ router.get('/profile', async (req, res) => {
     res.render('userProfile', {user, posts})
 })
 
+router.get("/users", async (req, res) => {
+    const user = req.session.user;
+    res.render('users', {user})
+})
+
 module.exports = router;
