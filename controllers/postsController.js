@@ -39,6 +39,12 @@ const getPost = async (req, res) => {
     
 }
 
+const createPost = async (req, res) => {
+    debugger;
+    await Post.createPost(req.body, req.session.user.id);
+    res.status(201).redirect('/')
+}
+
 const createPostAPI = async (req, res) => {
     const api_key = req.headers['x-api-key'];
 
@@ -218,6 +224,7 @@ const deleteCommentAPI = async (req, res) => {
 module.exports = {
     getAllPosts,
     getPost,
+    createPost,
     createPostAPI,
     deletePostAPI,
     editPostAPI,

@@ -1,0 +1,32 @@
+<%- include("./layouts/header"); -%>
+<body>
+    <%- include("./layouts/navbar"); -%>
+<div class="container">
+    <h5 class="text-center">CREATE A POST</h5>
+    <br>
+    <br>
+    <form action="/createPost" method="POST" class="row g-3">
+        <div class="col-md-6">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" id="title" name="title">
+        </div>
+        <div class="col-md-6">
+          <label for="project_link" class="form-label">Project Link</label>
+          <input type="url" class="form-control" id="project_link" name="project_link">
+        </div>
+        <div class="col-12">
+          <label for="descr" class="form-label">Description</label>
+          <input type="text" class="form-control" id="descr" name="descr">
+        </div>
+        <div class="col-12">
+          <label for="code_block" class="form-label">Code Block</label>
+          <textarea class="form-control" id="code_block" name="code_block" rows="3"></textarea>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-outline-info">Create Post</button>
+          <button type="submit" class="btn btn-outline-warning">Cancel</button>
+        </div>
+      </form>
+    </div>
+</body>
+</html>

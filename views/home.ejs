@@ -1,39 +1,15 @@
 <%- include("./layouts/header"); -%>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">  <i class="far fa-user"></i></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/profile">Profile</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/home">CodeFeed</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Tips?</a>
-              </li>
-            </ul>
-            <span class="navbar-text">
-              <a class="btn btn-primary" role="button" href="https://www.marcylabschool.org/" target="_blank" style="color: white;">Marcy Lab</a>
-            </span>
-          </div>
-        </div>
-      </nav>
-<br>
-<br>
-    <figure class="text-center">
-        <blockquote class="blockquote">
-          <p>Getting 1% better everyday!</p>
-        </blockquote>
-        <figcaption class="blockquote-footer">
-          Mayaa<cite title="Source Title">THE OG</cite>
-        </figcaption>
-      </figure>
+  <%- include("./layouts/navbar"); -%>
+
+  <figure class="text-center">
+      <blockquote class="blockquote">
+        <p>Getting 1% better everyday!</p>
+      </blockquote>
+      <figcaption class="blockquote-footer">
+        Mayaa<cite title="Source Title">THE OG</cite>
+      </figcaption>
+    </figure>
 <br>
 <br>
 <div class="card text-center">
@@ -56,20 +32,24 @@
     </div>
   </div>
 <br>
+<div class="d-grid gap-2 col-6 mx-auto">
+  <a href="/createPost" class="btn btn-outline-primary" type="button"><i class="fas fa-plus"></i> Add New Post</a>
+  </div>
+<br>
 <% for (const post of posts) { %>
   <div class="card container" style="width: 60rem;">
     <div class="card-body">
-        <p class="card-text text-end text-muted">1 day ago</p>
-      <h5 class="card-title"> <%= post.title %> </h5>
-      <h6 class="card-subtitle mb-2 text-muted">@user</h6>
+      <p class="card-title text-end text-muted">1 day ago</p>
+      <h5 class="card-title"> <%= post.title %> <i class="far fa-heart-circle"></i></h5>
+      <h6 class="card-subtitle mb-2 text-muted"> @user </h6>
       <p class="card-text"> <%= post.descr %> </p>
       <h6 class="card-subtitle mb-2 text-muted"> <%= post.project_link %> </h6>
       <a href="#" class="card-link">comments</a>
       <a href="#" class="card-link">view post</a>
     </div>
   </div>
-<% } %>
   <br>
-  <script type="text/javascript" src = "/javascripts/home.js"></script>
+<% } %>
+<script type="text/javascript" src = "/javascripts/home.js"></script>
 </body>
 </html>

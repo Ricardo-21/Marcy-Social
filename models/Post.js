@@ -1,6 +1,15 @@
 const db = require('../db/db');
 
 class Post {
+    static createPost(body, id) {
+        const queryText = "INSERT INTO posts (user_id, title, descr, project_link, code_block) VALUES ($1, $2, $3, $4, $5) RETURNING *";
+
+        let project_link = body.project_link || null;
+        let code_block = body.code_block || null;
+
+        return db.query(queryText, [id, body.title, body.descr, project_link, code_block]).then(post => post.rows[0]);
+    }
+
     static allPosts(){
         let queryText = 'SELECT * FROM posts'
         return db.query(queryText).then(posts => posts.rows);
@@ -10,6 +19,11 @@ class Post {
         const queryText = "SELECT * FROM posts ORDER BY id DESC";
 
         return db.query(queryText).then(users => users.rows);
+    }
+
+    static allUsersPost(user_id){
+        const queryText = "SELECT * FROM posts where user_id = $1"
+        return db.query(queryText, [user_id]).then(post => post.rows)
     }
 
     static getPost(post_id) {
@@ -46,15 +60,6 @@ class Post {
         const queryText = "INSERT INTO comments (post_id, user_id, initial_comment) VALUES ($1, $2, $3)";
 
         db.query(queryText, [post_id, user_id, comment]);
-    }
-
-    static createPost(body, user) {
-        const queryText = "INSERT INTO posts (user_id, title, descr, project_link, code_block) VALUES ($1, $2, $3, $4, $5) RETURNING *";
-
-        let project_link = body.project_link || null;
-        let code_block = body.code_block || null;
-
-        return db.query(queryText, [user.id, body.title, body.descr, project_link, code_block]).then(post => post.rows[0]);
     }
 
     static deletePost(post_id) {
