@@ -1,6 +1,6 @@
 console.log('I am connected');
 
-
+// newDate(foundTasks.task_date).toISOString().split('T')[0];
 
 
 fetch('/api/events')
