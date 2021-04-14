@@ -2,6 +2,7 @@ const express = require('express');
 const postsController = require('../controllers/postsController');
 const usersController = require('../controllers/usersController');
 const router = express.Router();
+const {Events} = require('../models/Events');
 
 router.get('/users', usersController.getUsers);
 
@@ -26,4 +27,10 @@ router.post('/posts/:id/comment', postsController.createCommentAPI);
 router.delete('/comments/:id', postsController.deleteCommentAPI);
 
 router.get('/comments', postsController.getComments);
+
+router.get('/events', async (req, res) => {
+    const events = await Events.getEvents();
+
+    res.json(events);
+})
 module.exports = router;

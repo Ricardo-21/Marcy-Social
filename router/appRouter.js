@@ -5,13 +5,14 @@ const {Auth} = require('../models/Auth')
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const {Post} = require('../models/Post');
+// const {Events} = require('../models/Events');
 
 router.get('/', async (req, res) => {
     const user = req.session.user;
     const posts = await Post.allPosts()
+    // const events = await Events.getEvents();
     if(user) {
-        debugger;
-        res.render('home', {posts})
+        res.render('home', {posts});
     }
     else {
         res.redirect('/login');
