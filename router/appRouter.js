@@ -5,10 +5,15 @@ const {Auth} = require('../models/Auth')
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const {Post} = require('../models/Post');
+// const {Events} = require('../models/Events');
 
 router.get('/', async (req, res) => {
     const user = req.session.user;
     const posts = await Post.allPosts()
+    posts.forEach(async post => {
+        post.comments = await Post.getComments(post.id);
+        console.log(post);
+    })
     if(user) {
         res.render('home', {posts, user})
     }
@@ -65,7 +70,7 @@ router.post('/register', async (req, res) => {
 
 router.get('/createPost', (req, res) => {
     const user = req.session.user;
-    res.render('PostForm', {user})
+    res.render('postForm', {user})
 })
 
 router.post('/createPost', postsController.createPost)
