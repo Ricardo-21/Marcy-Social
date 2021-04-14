@@ -9,6 +9,8 @@ app.set('view engine', 'ejs');
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 const session = require('express-session')
+app.set("view engine", 'ejs')
+app.use(express.static(__dirname + '/public'));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());

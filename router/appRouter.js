@@ -1,5 +1,5 @@
 const express = require('express');
-// const postsController = require('../contollers/tasksController');
+const postsController = require('../controllers/postsController');
 const usersController = require('../controllers/usersController');
 const {Auth} = require('../models/Auth')
 const router = express.Router();
@@ -10,31 +10,22 @@ router.get('/', async (req, res) => {
     const user = req.session.user;
     const posts = await Post.allPosts()
     if(user) {
-        debugger;
-        res.render('home', {posts})
+        res.render('home', {posts, user})
     }
     else {
         res.redirect('/login');
     }
 })
 
-router.get('/login', (req, res) => {
-    res.render('login')
-})
+router.get('/login', (req, res) => {res.render('login')})
 
-router.get('/register', (req, res) => {
-    res.render('register')
-})
+router.get('/register', (req, res) => {res.render('register')})
 
-router.get('/thankyou', (req, res) => {
-    res.render('thankyou')
-})
-
+router.get('/thankyou', (req, res) => {res.render('thankyou')})
 
 router.post('/login', async (req, res) => {
     let user = await Auth.getUser(req.body);
     const {username, password} = req.body;
-    // debugger;
     if(user) {
         bcrypt.compare(password, user.encrypted_password, (err, results) =>{
             if (results) {
@@ -54,6 +45,11 @@ router.post('/login', async (req, res) => {
 
 })
 
+router.get('/logout', (req, res) => {
+    req.session.destroy()
+    res.redirect('/login')
+  })
+
 router.post('/register', async (req, res) => {
     bcrypt.hash(req.body.password, 10, (err, hash) =>{
         if(err){
@@ -67,11 +63,17 @@ router.post('/register', async (req, res) => {
     })
 })
 
-router.get('/createTask', (req, res) => {
-    res.send('creating a task')
+router.get('/createPost', (req, res) => {
+    const user = req.session.user;
+    res.render('PostForm', {user})
 })
 
-router.post('/createTask', usersController.createPost)
+router.post('/createPost', postsController.createPost)
 
+router.get('/profile', async (req, res) => {
+    const user = req.session.user;
+    let posts = await Post.allUsersPost(user.id)
+    res.render('userProfile', {user, posts})
+})
 
 module.exports = router;
