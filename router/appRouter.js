@@ -10,7 +10,10 @@ const {Post} = require('../models/Post');
 router.get('/', async (req, res) => {
     const user = req.session.user;
     const posts = await Post.allPosts()
-    // const events = await Events.getEvents();
+    posts.forEach(async post => {
+        post.comments = await Post.getComments(post.id);
+        console.log(post);
+    })
     if(user) {
         res.render('home', {posts, user})
     }
@@ -67,7 +70,7 @@ router.post('/register', async (req, res) => {
 
 router.get('/createPost', (req, res) => {
     const user = req.session.user;
-    res.render('PostForm', {user})
+    res.render('postForm', {user})
 })
 
 router.post('/createPost', postsController.createPost)
