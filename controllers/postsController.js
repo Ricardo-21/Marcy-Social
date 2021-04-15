@@ -1,5 +1,6 @@
 const {Post} = require('../models/Post');
 const {Auth} = require('../models/Auth');
+const { User } = require('../models/Users');
 
 // const allPosts = async (req, res) => {
 // //     let posts = await Post.allPosts();
@@ -132,34 +133,53 @@ const editPostAPI = async (req, res) => {
 const likePostAPI = async (req, res) => {
     const api_key = req.headers['x-api-key'];
 
-    if(api_key) {
-        let user = await Auth.getUserApi(api_key);
-        let post = await Post.getPost(req.params.id);
-        if(user) {
-            if(post) {
-                let like = await Post.likePostTable(user.id, post.id);
-            
+    let currentUser = req.headers['user_id'];
+
+    if(currentUser){
+            let post = await Post.getPost(req.params.id);
+    
+            let like = await Post.likePostTable(currentUser, post.id);
+                
                 if(like.length !== 0) {
-                    Post.unlikePost(user.id, post.id);
-                    res.send(`successfully unliked post ${post.id}`)
+                    Post.unlikePost(currentUser, post.id);
                 }
                 else {
-                    Post.likePost(user.id, post.id);
-                    res.send(`successfully liked post ${post.id}`);
+                    Post.likePost(currentUser, post.id);
                 }
+    }
+
+    else{
+        if(api_key) {
+            let user = await Auth.getUserApi(api_key);
+            let post = await Post.getPost(req.params.id);
+            if(user) {
+                if(post) {
+                    let like = await Post.likePostTable(user.id, post.id);
+                
+                    if(like.length !== 0) {
+                        Post.unlikePost(user.id, post.id);
+                        res.send(`successfully unliked post ${post.id}`)
+                    }
+                    else {
+                        Post.likePost(user.id, post.id);
+                        res.send(`successfully liked post ${post.id}`);
+                    }
+                }
+                else {
+                    res.send('post does not exist');
+                }
+    
             }
             else {
-                res.send('post does not exist');
+                res.send('Invalid API KEY')
             }
-
         }
         else {
-            res.send('Invalid API KEY')
+            res.send('Please provide api-key to headers using X-API-KEY')
         }
     }
-    else {
-        res.send('Please provide api-key to headers using X-API-KEY')
-    }
+
+    
 }
 
 const createCommentAPI = async (req, res) => {

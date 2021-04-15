@@ -16,11 +16,13 @@ router.get('/', async (req, res) => {
         let likes = await Post.getLikes(posts[i].id);
         let comments = await Post.getComments(posts[i].id);
         posts[i].likes = likes;
+        posts[i].likeCount = likes.length;
         posts[i].comments = comments;
-        
+        console.log(posts[i].likeCount);
     }
     
     if(user) {
+        // debugger;
         res.render('home', {posts, user})
     }
     else {
@@ -85,6 +87,16 @@ router.get('/profile', async (req, res) => {
     const user = req.session.user;
     if(user) {
         let posts = await Post.allUsersPost(user.id)
+
+        for(let i = 0; i < posts.length; i ++) {
+            let likes = await Post.getLikes(posts[i].id);
+            let comments = await Post.getComments(posts[i].id);
+            posts[i].likes = likes;
+            posts[i].likeCount = likes.length;
+            posts[i].comments = comments;
+            console.log(posts[i].likeCount);
+        }
+        
         res.render('userProfile', {user, posts})
     }
     else {
