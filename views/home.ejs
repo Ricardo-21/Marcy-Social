@@ -39,17 +39,42 @@
 <% for (const post of posts) { %>
   <div class="card container" style="width: 60rem;">
     <div class="card-body">
+      <p class="card-text hidden"> <%= post.id %> </p>
       <p class="card-title text-end text-muted">1 day ago</p>
       <h5 class="card-title"> <%= post.title %> <i class="far fa-heart-circle"></i></h5>
       <h6 class="card-subtitle mb-2 text-muted"> @user </h6>
       <p class="card-text"> <%= post.descr %> </p>
       <h6 class="card-subtitle mb-2 text-muted"> <%= post.project_link %> </h6>
       <a href="#" class="card-link">comments</a>
-      <a href="#" class="card-link" data-toggle="modal" data-target="#exampleModal">view post</a>
+      <a href="" class="card-link viewpost" data-toggle="modal" data-target="#myModal">
+        view post
+      </a>
     </div>
   </div>
-  <br>
+
+  <div class="modal fade show" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> title </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons"> @user </i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6 class="card-subtitle mb-2 text-muted"> link </h6>
+                <p> descr </p>
+                <p> code block </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+      </div>
+      </div>
+<!-- Modal -->
+
+<br>
 <% } %>
-<script type="text/javascript" src = "/javascripts/home.js"></script>
 </body>
 </html>

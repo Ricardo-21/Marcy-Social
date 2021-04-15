@@ -2,14 +2,17 @@ console.log('I am connected');
 
 // newDate(foundTasks.task_date).toISOString().split('T')[0];
 
-// let myModal = new bootstrap.Modal(document.getElementById('myModal'), options)
+document.addEventListener( "click", (e) => {
+    console.log(e.target.innerText)
+    if(e.target.innerText == 'viewpost'){
 
-// let myModal = document.getElementById('myModal')
-// let myInput = document.getElementById('myInput')
+    }
+})
 
-// myModal.addEventListener('shown.bs.modal', function () {
-//   myInput.focus()
-// })
+// fetch('/api/posts/:id')
+// .then(res.json())
+// .then(results => {debugger;})
+
 
 
 fetch('/api/events')

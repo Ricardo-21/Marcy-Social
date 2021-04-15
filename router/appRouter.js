@@ -15,9 +15,10 @@ router.get('/', async (req, res) => {
     for(let i = 0; i < posts.length; i ++) {
         let likes = await Post.getLikes(posts[i].id);
         let comments = await Post.getComments(posts[i].id);
+        let viewpost = await Post.getPost(posts[i].id)
         posts[i].likes = likes;
         posts[i].comments = comments;
-        
+        posts[i].viewpost = viewpost
     }
     
     if(user) {
@@ -106,6 +107,13 @@ router.get("/users", async (req, res) => {
 })
 
 router.get('/users/:username', usersController.getUserUsername);
+
+// router.get('/posts/:id', async (req, res) => {
+//     debugger;
+//     let viewpost = await Post.getPost(req.params.id)
+//     res.render('home', {})
+// })
+
 router.delete("/deletePost/:id", async (req, res) => {
     await Post.deletePost(req.params.id)
     res.redirect('/profile')
