@@ -23,7 +23,7 @@ fetch('/api/events')
         
     })
 
-    console.log(events);
+    // console.log(events);
 
     let event1 = events[1] || '';
     let event2 = events[2] || '';

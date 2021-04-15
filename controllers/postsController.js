@@ -6,7 +6,9 @@ const allPosts = async (req, res) => {
 
     for(let i = 0; i < posts.length; i ++) {
         let likes = await Post.getLikes(posts[i].id);
-        posts[i].likes = parseInt(likes.count);
+        let comments = await Post.getComments(posts[i].id);
+        posts[i].likes = likes;
+        posts[i].comments = comments;
         
     }
 

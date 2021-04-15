@@ -1,7 +1,8 @@
 const express = require('express');
 const postsController = require('../controllers/postsController');
 const usersController = require('../controllers/usersController');
-const {Auth} = require('../models/Auth')
+const {Auth} = require('../models/Auth');
+const {User} = require('../models/Users');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const {Post} = require('../models/Post');
@@ -12,7 +13,7 @@ router.get('/', async (req, res) => {
     const posts = await Post.allPosts()
     posts.forEach(async post => {
         post.comments = await Post.getComments(post.id);
-        console.log(post);
+        // console.log(post);
     })
     if(user) {
         res.render('home', {posts, user})
@@ -77,13 +78,28 @@ router.post('/createPost', postsController.createPost)
 
 router.get('/profile', async (req, res) => {
     const user = req.session.user;
-    let posts = await Post.allUsersPost(user.id)
-    res.render('userProfile', {user, posts})
+    if(user) {
+        let posts = await Post.allUsersPost(user.id)
+        res.render('userProfile', {user, posts})
+    }
+    else {
+        res.redirect('/login');
+    }
+    
 })
 
 router.get("/users", async (req, res) => {
     const user = req.session.user;
-    res.render('users', {user})
+    if(user) {
+        // const users = await User.getUsers();
+        res.render('users', {user})
+    }
+    else {
+        res.redirect('/login');
+    }
+    
 })
+
+router.get('/users/:username', usersController.getUserUsername);
 
 module.exports = router;

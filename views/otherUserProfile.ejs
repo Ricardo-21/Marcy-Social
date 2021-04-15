@@ -13,28 +13,24 @@
 </head>
 <body>
   <%- include("./layouts/navbar"); -%>
-    <h4 class="text-center">My Profile</h4>
+    <h4 class="text-center"><%= otherUser.username %>'s Profile</h4>
   <div class="container emp-profile">
     <form method="post">
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    <img src="https://st.depositphotos.com/1915171/5109/v/600/depositphotos_51091665-stock-illustration-coder-sign-icon-programmer-symbol.jpg" alt=""/>
-                        <div class="file btn btn-lg btn-primary">
-                            Change Photo
-                            <input type="file" name="file"/>
-                        </div>
+                    <img src="<%= otherUser.photo_src %>" alt=""/>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="profile-head">
                             <h5>
-                                <%= user.firstname %>, <%= user.lastname %>
+                                <%= otherUser.firstname %>, <%= otherUser.lastname %>
                             </h5>
                             <h6>
                                 Fullstack Developer
                             </h6>
-                            <p class="proile-rating">USERNAME : <span>@<%= user.username %></span></p>
+                            <p class="proile-rating">USERNAME : <span>@<%= otherUser.username %></span></p>
                             <p class="proile-rating">BIO GOES HERE.....</p>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <!-- <li class="nav-item">
@@ -46,22 +42,15 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-outline-primary btn-sm" name="btnAddMore">Edit Profile</button>
-            </div>
         </div>
         <div class="row">
             <div class="col-md-4">
-                <div class="profile-work text-center">
-                    <a href="/logout" class="btn btn-outline-primary btn-sm d-grid gap-2 col-6 mx-auto">Log Out</a>
-                </div>
+
             </div>
             <div class="col-md-8">
                 <div class="tab-content profile-tab" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="d-grid gap-2 col-6 mx-auto">
-                            <a href="/createPost" class="btn btn-outline-primary" type="button"><i class="fas fa-plus"></i> Add New Post</a>
-                        </div>
+
                         <br>
                     <% for (const post of posts) { %>
                         <div class="card" style="width: 40rem;">
@@ -73,7 +62,6 @@
                               <h6 class="card-subtitle mb-2"><a href="<%= post.project_link %>" class="card-link"><%= post.project_link %> </a></h6>
                               <a href="#" class="card-link">comments <span>0</span> </a>
                               <a href="#" class="card-link">view post</a>
-                              <a href="/deletePost" class="card-link"><i class="fas fa-trash-alt" style="color:red;"></i></a>
                             </div>
                         </div>
                         <br>
