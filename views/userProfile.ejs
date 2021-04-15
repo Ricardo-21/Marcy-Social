@@ -85,10 +85,10 @@
                               <p class="card-text"> <%= post.descr %> </p>
                               <h6 class="card-subtitle mb-2"><a href="<%= post.project_link %>" class="card-link"><%= post.project_link %> </a></h6>
                               <a href="#" class="card-link">comments <span>0</span> </a>
-                              <a href="#" class="card-link">view post</a>
+                              <a href="/post/<%= post.id %>/edit" class="card-link">edit post</a>
                               <form action="/deletePost/<%= post.id %>?_method=DELETE" method="post">
-                                <button type="submit" class="card-link">
-                                    DELETE
+                                <button type="submit" class="btn btn-outline-primary btn-sm">
+                                    delete
                                 </button>
                               </form>
                             </div>
