@@ -9,11 +9,8 @@ const {Post} = require('../models/Post');
 
 router.get('/', async (req, res) => {
     const user = req.session.user;
-    const posts = await Post.allPosts()
-    posts.forEach(async post => {
-        post.comments = await Post.getComments(post.id);
-        console.log(post);
-    })
+    let posts = await Post.allPosts()
+
     if(user) {
         res.render('home', {posts, user})
     }
@@ -84,6 +81,16 @@ router.get('/profile', async (req, res) => {
 router.get("/users", async (req, res) => {
     const user = req.session.user;
     res.render('users', {user})
+})
+
+router.delete("/deletePost/:id", async (req, res) => {
+    await Post.deletePost(req.params.id)
+    res.redirect('/profile')
+})
+
+router.get("/profile/edit", async (req, res) => {
+    const user = req.session.user;
+    res.render("editProfile", {user})
 })
 
 module.exports = router;

@@ -1,17 +1,18 @@
 const {Post} = require('../models/Post');
 const {Auth} = require('../models/Auth');
 
-const allPosts = async (req, res) => {
-    let posts = await Post.allPosts();
+// const allPosts = async (req, res) => {
+//     let posts = await Post.allPosts();
+//     posts.comments = await Post.getComments(posts.id);
 
-    for(let i = 0; i < posts.length; i ++) {
-        let likes = await Post.getLikes(posts[i].id);
-        posts[i].likes = parseInt(likes.count);
+//     for(let i = 0; i < posts.length; i ++) {
+//         let likes = await Post.getLikes(posts[i].id);
+//         posts[i].likes = parseInt(likes.count);
         
-    }
+//     }
 
-    res.status(200).render('home', {posts})
-}
+//     res.status(200).render('home', {posts})
+// }
 
 const getAllPosts = async (req, res) => {
     let posts = await Post.getAllPosts();
@@ -40,9 +41,8 @@ const getPost = async (req, res) => {
 }
 
 const createPost = async (req, res) => {
-    debugger;
     await Post.createPost(req.body, req.session.user.id);
-    res.status(201).redirect('/')
+    res.status(201).redirect('/profile')
 }
 
 const createPostAPI = async (req, res) => {
@@ -230,7 +230,7 @@ module.exports = {
     editPostAPI,
     likePostAPI,
     createCommentAPI,
-    allPosts,
+    // allPosts,
     deleteCommentAPI,
     getComments
 }
