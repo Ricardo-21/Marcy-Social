@@ -27,6 +27,7 @@ window.addEventListener('DOMContentLoaded', () =>{
 
 function commentMade(e) {
     e.preventDefault();
+    let body = e.target.parentElement.parentElement.children[1];
     let commentTxt = e.target.children[0].children[0].value;
     let username = document.querySelector('h6').innerText.split('@')[1];
 
@@ -38,6 +39,8 @@ function commentMade(e) {
 
     comment.innerText = username;
     p.innerText = commentTxt;
+    body.append(comment, p);
+    e.target.reset();
     console.log();
 }
 
