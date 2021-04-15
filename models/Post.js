@@ -64,7 +64,6 @@ class Post {
 
     static deletePost(post_id) {
         const queryText = "DELETE FROM posts WHERE id = $1";
-
         db.query(queryText, [post_id]);
     }
 

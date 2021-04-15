@@ -2,6 +2,15 @@ console.log('I am connected');
 
 // newDate(foundTasks.task_date).toISOString().split('T')[0];
 
+// let myModal = new bootstrap.Modal(document.getElementById('myModal'), options)
+
+// let myModal = document.getElementById('myModal')
+// let myInput = document.getElementById('myInput')
+
+// myModal.addEventListener('shown.bs.modal', function () {
+//   myInput.focus()
+// })
+
 
 fetch('/api/events')
 .then(res => res.json())
