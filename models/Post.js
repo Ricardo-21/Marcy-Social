@@ -97,9 +97,9 @@ class Post {
     }
 
     static getLikes(post_id) {
-        const queryText = "SELECT COUNT(*) FROM likes WHERE post_id = $1"
+        const queryText = "SELECT * FROM likes WHERE post_id = $1"
 
-        return db.query(queryText, [post_id]).then(likes => likes.rows[0]);
+        return db.query(queryText, [post_id]).then(likes => likes.rows);
     }
 
 

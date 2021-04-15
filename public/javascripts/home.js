@@ -15,6 +15,39 @@ document.addEventListener( "click", (e) => {
 
 
 
+let hearts = document.querySelectorAll('.fa-heart-circle');
+hearts.forEach(heart => {
+    heart.addEventListener('click', heartClick);
+})
+
+function heartClick(e) {
+    console.log(e.target.id, e.target.attributes.alt.value);
+    if(e.target.style.color){
+        e.target.style.color = '';
+        let num = parseInt(e.target.innerText)
+        num -= 1;
+        e.target.innerText = num.toString();
+        likeUnlike(e.target.attributes.alt.value, e.target.id);
+    }
+    else {
+        e.target.style.color = 'blue';
+        let num = parseInt(e.target.innerText)
+        num += 1;
+        e.target.innerText = num.toString();
+        likeUnlike(e.target.attributes.alt.value, e.target.id);
+    }
+}
+
+function likeUnlike(user_id, post_id) {
+    fetch(`/api/posts/${post_id}/like`, {
+        method: 'PATCH',
+        headers: {
+            "user_id": user_id
+        }
+    })
+}
+
+
 fetch('/api/events')
 .then(res => res.json())
 .then(results => {
@@ -29,7 +62,7 @@ fetch('/api/events')
             events.splice(index, 1);
         }
         
-        console.log(currentDate, endDate, index, currentDate > endDate);
+        // console.log(currentDate, endDate, index, currentDate > endDate);
 
         // console.log(event.event, endDate);
         
