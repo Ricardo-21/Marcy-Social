@@ -5,7 +5,10 @@ console.log('I am connected');
 document.addEventListener( "click", (e) => {
     console.log(e.target.innerText)
     if(e.target.innerText == 'viewpost'){
-
+        console.log('yes view')
+    }
+    else {
+        console.log('no view')
     }
 })
 

@@ -19,6 +19,7 @@ router.get('/', async (req, res) => {
         posts[i].likes = likes;
         posts[i].likeCount = likes.length;
         posts[i].comments = comments;
+        posts[i].viewpost = [viewpost];
         console.log(posts[i].likeCount);
     }
     
@@ -120,14 +121,21 @@ router.get("/users", async (req, res) => {
 
 router.get('/users/:username', usersController.getUserUsername);
 
-// router.get('/posts/:id', async (req, res) => {
-//     debugger;
-//     let viewpost = await Post.getPost(req.params.id)
-//     res.render('home', {})
-// })
-
 router.delete("/deletePost/:id", async (req, res) => {
     await Post.deletePost(req.params.id)
+    res.redirect('/profile')
+})
+
+router.get("/post/:id/edit", async (req, res) =>{
+    const user = req.session.user;
+    let post = await Post.getPost(req.params.id)
+
+    res.render('editPostForm', {user, post})
+})
+
+router.patch('/post/:id/edit', async (req, res) => {
+    debugger;
+    await Post.editPost(req.params, req.body)
     res.redirect('/profile')
 })
 

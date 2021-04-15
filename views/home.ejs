@@ -39,7 +39,6 @@
 <% for (const post of posts) { %>
   <div class="card container" style="width: 60rem;">
     <div class="card-body">
-      <p class="card-text hidden"> <%= post.id %> </p>
       <p class="card-title text-end text-muted">1 day ago</p>
       <% 
         let isLiked = false
@@ -50,11 +49,12 @@
         }
         if(isLiked){
       %>
-        <h5 class="card-title"> <%= post.title %> <i class="far fa-heart-circle" style="cursor: pointer; color: blue" id = "<%= post.id %>" alt = "<%= user.id %>"><%= post.likeCount %></i></h5>
+        <h5 class="card-title"> <%= post.title %> <i class="far fa-heart-circle" style="cursor: pointer; color: blue" id = "<%= post.id %>" alt = "<%= user.id %>"></i> <span><%= post.likeCount %></span> </h5>
       <% } else {%>
-        <h5 class="card-title"> <%= post.title %> <i class="far fa-heart-circle" style="cursor: pointer;" id = "<%= post.id %>" alt = "<%= user.id %>"><%= post.likeCount %></i></h5>
+        <h5 class="card-title"> <%= post.title %>  <i class="far fa-heart-circle" style="cursor: pointer;" id = "<%= post.id %>" alt = "<%= user.id %>"></i> <span><%= post.likeCount %></span></h5>
       <%}%>
       <h6 class="card-subtitle mb-2 text-muted"> @user </h6>
+      <h6 class="card-subtitle mb-2 text-muted"><a href="<%= post.project_link %>"> <%= post.project_link %> </a></h6>
       <p class="card-text"> <%= post.descr %> </p>
       <h6 class="card-subtitle mb-2 text-muted"> <%= post.project_link %> </h6>
       <a href="" class="card-link viewpost" data-toggle="modal" data-target="#commentModal<%= post.id %>">comments</a>
@@ -100,22 +100,22 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"> <%= post.title %></h5>
+                <h5 class="modal-title"> <%= post.title %> </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="material-icons"> @user </i>
                 </button>
             </div>
             <div class="modal-body">
-                <h6 class="card-subtitle mb-2 text-muted"> <%= post.project_link %></h6>
-                <p> <%= post.descr %></p>
-                <p> <%= post.code_block %></p>
+              <h6 class="card-subtitle mb-2 text-muted"><a href="<%= post.project_link %>"> <%= post.project_link %> </a></h6>
+                <p> <%= post.descr %> </p>
+                <p> <%= post.code_block %> </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Close</button>
             </div>
         </div>
       </div>
-      </div>
+    </div>
 <!-- Modal -->
 
 <br>

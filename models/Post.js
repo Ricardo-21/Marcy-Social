@@ -69,6 +69,7 @@ class Post {
 
     static editPost(post, body) {
         const queryText = "UPDATE posts SET title = $1, descr = $2, project_link = $3, code_block = $4 WHERE id = $5 RETURNING *";
+        debugger;
         let title = body.title || post.title;
         let descr = body.descr || post.descr
         let project_link = body.project_link || post.project_link;
