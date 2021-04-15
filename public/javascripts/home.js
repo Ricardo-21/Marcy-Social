@@ -13,12 +13,34 @@ document.addEventListener( "click", (e) => {
 // .then(res.json())
 // .then(results => {debugger;})
 
-
-
-let hearts = document.querySelectorAll('.fa-heart-circle');
-hearts.forEach(heart => {
-    heart.addEventListener('click', heartClick);
+window.addEventListener('DOMContentLoaded', () =>{
+    let commentForms = document.querySelectorAll('.commentForm');
+    commentForms.forEach(form => {
+        form.addEventListener('submit', commentMade);
+    })
+    let hearts = document.querySelectorAll('.fa-heart-circle');
+    hearts.forEach(heart => {
+        heart.addEventListener('click', heartClick);
+    })
 })
+
+
+function commentMade(e) {
+    e.preventDefault();
+    let commentTxt = e.target.children[0].children[0].value;
+    let username = document.querySelector('h6').innerText.split('@')[1];
+
+    let p = document.createElement('p');
+    let comment = document.createElement('h6');
+    comment.classList.add('card-subtitle'); 
+    comment.classList.add('mb-2');
+    comment.classList.add('text-muted');
+
+    comment.innerText = username;
+    p.innerText = commentTxt;
+    console.log();
+}
+
 
 function heartClick(e) {
     console.log(e.target.id, e.target.attributes.alt.value);
