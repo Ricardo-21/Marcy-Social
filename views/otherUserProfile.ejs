@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="/stylesheets/index.css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+    <script type="text/javascript" src="/javascripts/home.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
   <%- include("./layouts/navbar"); -%>
@@ -72,63 +75,87 @@
                               <!-- <h6 class="card-subtitle mb-2 text-muted"> @user </h6> -->
                               <p class="card-text"> <%= post.descr %> </p>
                               <h6 class="card-subtitle mb-2"><a href="<%= post.project_link %>" class="card-link"><%= post.project_link %> </a></h6>
-                              <a href="#" class="card-link">comments <span>0</span> </a>
-                              <a href="#" class="card-link">view post</a>
+                              <a href="" class="card-link viewpost" data-toggle="modal" data-target="#commentModal<%= post.id %>">comments</a>
+                              <a href="" class="card-link viewpost" data-toggle="modal" data-target="#myModal<%= post.id %>">
+                                view post
+                              </a>
                               </form>
                             </div>
                         </div>
+
+
+
+                        <div class="modal fade show" id="commentModal<%= post.id %>" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title"> <%= post.title %> </h5>
+                                        <a href= '/users/<%= user.username %>'>
+                                          <button type="button" class="close" aria-label="Close">
+                                            @<%= user.username%>
+                                          </button>
+                                      </a>
+                                    </div>
+                                    <div class="modal-body">
+                                      <% for(comment of post.comments) {%>
+                                        <div>
+                                        <a href= '/users/<%= comment.username%>'>
+                                          <h6 class="card-subtitle mb-2 text-muted" style="cursor: pointer;" > <%= comment.username %> </h6> 
+                                        </a>
+                                        <% if(comment.user_id == user.id) {%>
+                                          <p style="color: black;"><%= comment.initial_comment %> <button class="btn btn-outline-primary btn-sm delete-comment" alt = 'post<%=post.id%>' id = 'button<%=user.id%>'>delete</button></p>
+                                        <%} else {%>
+                                          <p style="color: black;"><%= comment.initial_comment %></p>
+                                          <%}%>
+                                        </div>
+                                      <%}%>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <form class = 'commentForm' id = 'form<%= post.id %>' alt = 'user<%= user.id %>'>
+                                        <div class="input-group mb-3">
+                                          <input type="text" class="form-control" placeholder="Comment" aria-label="Comment" aria-describedby="basic-addon2"  required>
+                                        </div>
+                                      </form>
+                                      <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                              </div>
+                          </div>
+
+
+
+                          <div class="modal fade show" id="myModal<%= post.id %>" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title"> <%= post.title %> </h5>
+                                        <a href= '/users/<%= user.username %>'>
+                                          <button type="button" class="close" aria-label="Close">
+                                            @<%= user.username%>
+                                          </button>
+                                      </a>
+                                    </div>
+                                    <div class="modal-body">
+                                      <h6 class="card-subtitle mb-2 text-muted"><a href="<%= post.project_link %>"> <%= post.project_link %> </a></h6>
+                                        <p> <%= post.descr %> </p>
+                                        <div style="background-color: #eff0f1;">
+                                          <% if (post.code_block !== null) {%>
+                                            <pre><code> <%- post.code_block.replace(/\n/g, '<br>') %> </code></pre>
+                                          <% } %>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                        <!-- Modal -->
+
                         <br>
                         <br>
                     <% } %>
 
-                    </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Experience</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>Expert</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Hourly Rate</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>10$/hr</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Total Projects</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>230</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>English Level</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>Expert</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Availability</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>6 months</p>
-                                    </div>
-                                </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label>Your Bio</label><br/>
-                                <p>Your detail description</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

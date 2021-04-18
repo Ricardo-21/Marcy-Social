@@ -184,6 +184,18 @@ const likePostAPI = async (req, res) => {
 
 const createCommentAPI = async (req, res) => {
     let api_key = req.headers['x-api-key'];
+    let currentUser = req.headers['user_id'];
+    // debugger;
+    if(currentUser) {
+        let post = await Post.getPost(req.params.id);
+        if(post) {
+            
+            Post.addComment(post.id, currentUser, req.body.comment);
+        }
+        else {
+            res.send('post does not exist');
+        }
+    }
 
     if(api_key) {
         let user = await Auth.getUserApi(api_key);
@@ -215,32 +227,50 @@ const getComments = async (req, res) => {
     res.json(comments);
 }
 
+const getCommentId = async (req, res) => {
+    let user = req.headers.user_id;
+    let postId = req.headers.postid
+    let initialComment = req.headers.comment;
+    let comment = await Post.getCommentId(user, postId, initialComment);
+    res.json(comment)
+}
+
 const deleteCommentAPI = async (req, res) => {
+    let currentUser = req.headers.user_id
     let api_key = req.headers['x-api-key'];
     let comment = await Post.getComment(req.params.id);
     let user = await Auth.getUserApi(api_key);
-    if(api_key) {
-        if(user) {
-            if(comment) {
-                if(comment.user_id == user.id) {
-                    Post.deleteComment(comment.id);
-                    res.send(`Comment with id: ${comment.id} has been deleted`);
+
+    if(currentUser) {
+        Post.deleteComment(comment.id);
+    }
+
+
+    else {
+        if(api_key) {
+            if(user) {
+                if(comment) {
+                    if(comment.user_id == user.id) {
+                        Post.deleteComment(comment.id);
+                        res.send(`Comment with id: ${comment.id} has been deleted`);
+                    }
+                    else {
+                        res.send('You do not own this comment');
+                    }
                 }
                 else {
-                    res.send('You do not own this comment');
+                    res.send('Comment does not exist');
                 }
             }
             else {
-                res.send('Comment does not exist');
+                res.send('Invalid API KEY')
             }
         }
         else {
-            res.send('Invalid API KEY')
+            res.send('Please provide api-key to headers using X-API-KEY')
         }
     }
-    else {
-        res.send('Please provide api-key to headers using X-API-KEY')
-    }
+    
 }
 
 module.exports = {
@@ -254,5 +284,6 @@ module.exports = {
     createCommentAPI,
     // allPosts,
     deleteCommentAPI,
-    getComments
+    getComments,
+    getCommentId
 }
