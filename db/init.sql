@@ -29,7 +29,7 @@ CREATE TABLE comments (
 	post_id INT REFERENCES posts(id),
     initial_comment TEXT
     );
-	
+
 CREATE TABLE likes (
     id SERIAL PRIMARY KEY, 
 	user_id INT REFERENCES users(id),

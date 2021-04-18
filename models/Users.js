@@ -23,6 +23,13 @@ class User {
 
         return db.query(queryText, [username]).then(user => user.rows[0]);
     }
+
+    static editUser(id, body){
+        const queryText = "UPDATE users SET photo_src = $1, bio = $2 WHERE id = $3 RETURNING *"
+        return db.query(queryText, [body.photo_src, body.bio, id]).then(results => results.rows[0])
+    }
+
+    
 }
 
 module.exports = {User};

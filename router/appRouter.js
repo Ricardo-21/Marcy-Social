@@ -41,24 +41,25 @@ router.get('/thankyou', (req, res) => {res.render('thankyou')})
 router.post('/login', async (req, res) => {
     let user = await Auth.getUser(req.body);
     const {username, password} = req.body;
-    if(user) {
-        bcrypt.compare(password, user.encrypted_password, (err, results) =>{
-            if (results) {
-                // the email exists in the db and the password was a match
-                req.session.user = user
-                res.redirect('/')
-                console.log('signed in')
-                // res.send('Right email and password');
-              } else {
-                res.send("Invalid credentials"); // password is incorrect
-              }
-        })
-    }
-    else {
-        res.send('wrong creds');
-    }
-
-})
+    try {
+        if(user){
+          let results = await bcrypt.compare(password, user.encrypted_password)
+          if (results) {
+            // the email exists in the db
+            // the password was a match
+            req.session.user = user
+            res.redirect('/')
+          } else {
+            throw Error("Your password is incorrect. Try again");
+          }
+        } else {
+          throw Error("This username is not found");
+        }
+      } catch (error) {
+        res.render("login", {message: error.message})
+      }
+    
+    })
 
 router.get('/logout', (req, res) => {
     req.session.destroy()
@@ -66,7 +67,7 @@ router.get('/logout', (req, res) => {
   })
 
 router.post('/register', async (req, res) => {
-    bcrypt.hash(req.body.password, 10, (err, hash) =>{
+    bcrypt.hash(req.body.password, 10, (err, hash) => {
         if(err){
             res.send("error", error);
         }
@@ -86,7 +87,8 @@ router.get('/createPost', (req, res) => {
 router.post('/createPost', postsController.createPost)
 
 router.get('/profile', async (req, res) => {
-    const user = req.session.user;
+    const user = await User.getUser(req.session.user.id)
+    // debugger;
     if(user) {
         let posts = await Post.allUsersPost(user.id)
 
@@ -139,9 +141,15 @@ router.patch('/post/:id/edit', async (req, res) => {
     res.redirect('/profile')
 })
 
-router.get("/profile/edit", async (req, res) => {
-    const user = req.session.user;
-    res.render("editProfile", {user})
+router.get('/profile/edit', (req, res) => {
+    const user = req.session.user
+    res.render('editProfile', {user})
+})
+
+router.patch('/profile/edit', async (req, res) => {
+    const userId = req.session.user.id;
+    await User.editUser(userId, req.body)
+    res.redirect('/profile')
 })
 
 module.exports = router;

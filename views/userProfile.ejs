@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/stylesheets/index.css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+    <script src="/javascripts/edituser.js"></script>
 </head>
 <body>
   <%- include("./layouts/navbar"); -%>
@@ -19,7 +20,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    <img src="https://st.depositphotos.com/1915171/5109/v/600/depositphotos_51091665-stock-illustration-coder-sign-icon-programmer-symbol.jpg" alt=""/>
+                    <img src="<%= user.photo_src %>" alt=""/>
                         <!-- <div class="file btn btn-lg btn-primary">
                             Change Photo
                             <input type="file" name="file"/>
@@ -29,13 +30,13 @@
             <div class="col-md-6">
                 <div class="profile-head">
                             <h5>
-                                <%= user.firstname %>, <%= user.lastname %>
+                                <%= user.firstname %>, <%= user.lastname %> <i class="fal fa-badge-check"></i>
                             </h5>
-                            <h6>
+                            <h6 id="occupation">
                                 Fullstack Developer
                             </h6>
                             <p class="proile-rating">USERNAME : <span>@<%= user.username %></span></p>
-                            <p class="proile-rating">BIO GOES HERE.....</p>
+                            <p class="proile-rating">BIO : <%= user.bio %></p>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <!-- <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#about" role="tab" aria-controls="home" aria-selected="true">About</a>
@@ -47,7 +48,7 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <a href="profile/edit" class="btn btn-outline-primary btn-sm" name="btnAddMore">Edit Profile</a>
+                <a href="/profile/edit" class="btn btn-outline-primary btn-sm" name="btnAddMore" id="editbutton">Edit Profile</a>
             </div>
         </div>
     <!-- </form>   -->
@@ -101,6 +102,6 @@
             </div>
         </div>         
 </div>
-<script type="text/javascript" src = "/javascripts/home.js"></script>
+<!-- <script type="text/javascript" src = "/javascripts/home.js"></script> -->
 </body>
 </html>

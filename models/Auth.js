@@ -3,9 +3,11 @@ const db = require("../db/db");
 class Auth {
 
     static register(body) {
-        let queryText = "INSERT INTO users (firstname, lastname, username, encrypted_password, api_key) VALUES ($1, $2, $3, $4, $5);";
-
-        db.query(queryText, [body.firstname, body.lastname, body.username, body.encrypt, body.api])
+        let queryText = "INSERT INTO users (firstname, lastname, username, encrypted_password, photo_src, api_key) VALUES ($1, $2, $3, $4, $5, $6);";
+        
+        let photo_src = 'https://st.depositphotos.com/1915171/5109/v/600/depositphotos_51091665-stock-illustration-coder-sign-icon-programmer-symbol.jpg'
+        
+        db.query(queryText, [body.firstname, body.lastname, body.username, body.encrypt, photo_src, body.api])
     }
 
     static getUser(body) {

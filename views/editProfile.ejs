@@ -14,34 +14,27 @@
 <body>
   <%- include("./layouts/navbar"); -%>
     <h4 class="text-center">My Profile</h4>
-  <div class="container emp-profile">
-    <!-- <form method="post"> -->
+<div class="container emp-profile">
+    <form action="/profile/edit?_method=PATCH" method="post"> 
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    <img src="https://st.depositphotos.com/1915171/5109/v/600/depositphotos_51091665-stock-illustration-coder-sign-icon-programmer-symbol.jpg" alt=""/>
-                        <div class="file btn btn-lg btn-primary">
-                            Change Photo
-                            <input type="file" name="file"/>
-                        </div>
+                    <img src="<%= user.photo_src %>" alt=""/>
+                    <input type="url" name="photo_src" placeholder="enter img url"/>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="profile-head">
-                            <h5>
-                               
-                            </h5>
-                            <h6>
-                                Fullstack Developer
-                            </h6>
-                            <p class="proile-rating">USERNAME : <span>@</span></p>
-                            <p class="proile-rating">BIO GOES HERE.....</p>
+                    <label for="descr" class="form-label">Bio</label>
+                    <input type="text" class="form-control" id="descr" name="bio">
                 </div>
+                <br>
             </div>
             <div class="col-md-2">
-                <a href="" class="btn btn-outline-primary btn-sm" name="btnAddMore">Save</a>
+                <button type="submit" class="btn btn-outline-primary btn-sm">Save</button>
             </div>
-        </div>     
+        </div>
+    </form>
 </div>
 
 </body>
