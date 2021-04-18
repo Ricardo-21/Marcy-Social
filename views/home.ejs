@@ -49,11 +49,11 @@
         }
         if(isLiked){
       %>
-        <h5 class="card-title"> <%= post.title %> <i class="far fa-heart-circle" style="cursor: pointer; color: blue" id = "<%= post.id %>" alt = "<%= user.id %>"></i> <span><%= post.likeCount %></span> </h5>
+        <h5 class="card-title"> <%= post.title %> <i class="far fa-heart-circle" style="cursor: pointer; color: blue" id = "<%= post.id %>" alt = "<%= user.id %>"></i><span><%= post.likeCount %></span></h5>
       <% } else {%>
         <h5 class="card-title"> <%= post.title %>  <i class="far fa-heart-circle" style="cursor: pointer;" id = "<%= post.id %>" alt = "<%= user.id %>"></i> <span><%= post.likeCount %></span></h5>
       <%}%>
-      <h6 class="card-subtitle mb-2 text-muted"> @user </h6>
+      <h6 class="card-subtitle mb-2 text-muted"> @<%= post.username%> </h6>
       <h6 class="card-subtitle mb-2 text-muted"><a href="<%= post.project_link %>"> <%= post.project_link %> </a></h6>
       <p class="card-text"> <%= post.descr %> </p>
       <h6 class="card-subtitle mb-2 text-muted"> <%= post.project_link %> </h6>
@@ -70,20 +70,30 @@
       <div class="modal-content">
           <div class="modal-header">
               <h5 class="modal-title"> <%= post.title %> </h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <i class="material-icons"> @user </i>
-              </button>
+              <a href= '/users/<%= post.username %>'>
+                <button type="button" class="close" aria-label="Close">
+                  @<%= post.username%>
+                </button>
+            </a>
           </div>
           <div class="modal-body">
             <% for(comment of post.comments) {%>
-              <h6 class="card-subtitle mb-2 text-muted"> <%= comment.username %> </h6>
-              <p><%= comment.initial_comment %></p>
+              <div>
+              <a href= '/users/<%= comment.username%>'>
+                <h6 class="card-subtitle mb-2 text-muted" style="cursor: pointer;" > <%= comment.username %> </h6> 
+              </a>
+              <% if(comment.user_id == user.id) {%>
+                <p><b><%= comment.initial_comment %></b> <button class="btn btn-outline-primary btn-sm delete-comment" alt = 'post<%=post.id%>' id = 'button<%=user.id%>'>delete</button></p>
+              <%} else {%>
+                <p><b><%= comment.initial_comment %></b></p>
+                <%}%>
+              </div>
             <%}%>
           </div>
           <div class="modal-footer">
-            <form class = 'commentForm' id = 'form<%= post.id %>'>
+            <form class = 'commentForm' id = 'form<%= post.id %>' alt = 'user<%= user.id %>'>
               <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Comment" aria-label="Comment" aria-describedby="basic-addon2">
+                <input type="text" class="form-control" placeholder="Comment" aria-label="Comment" aria-describedby="basic-addon2"  required>
               </div>
             </form>
             <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Close</button>
@@ -94,18 +104,24 @@
 
 
   <div class="modal fade show" id="myModal<%= post.id %>" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"> <%= post.title %> </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i class="material-icons"> @user </i>
-                </button>
+                <a href= '/users/<%= post.username %>'>
+                  <button type="button" class="close" aria-label="Close">
+                    @<%= post.username%>
+                  </button>
+              </a>
             </div>
             <div class="modal-body">
               <h6 class="card-subtitle mb-2 text-muted"><a href="<%= post.project_link %>"> <%= post.project_link %> </a></h6>
                 <p> <%= post.descr %> </p>
-                <p> <%= post.code_block %> </p>
+                <div style="background-color: #eff0f1;">
+                  <% if (post.code_block !== null) {%>
+                    <pre><code> <%- post.code_block.replace(/\n/g, '<br>') %> </code></pre>
+                  <% } %>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Close</button>

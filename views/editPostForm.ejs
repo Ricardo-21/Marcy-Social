@@ -8,19 +8,19 @@
     <form action="/post/<%= post.id %>/edit?_method=PATCH" method="POST" class="row g-3">
         <div class="col-md-6">
           <label for="title" class="form-label">Title</label>
-          <input type="text" class="form-control" id="title" name="title" placeholder="<%= post.title %>">
+          <input type="text" class="form-control" id="title" name="title" placeholder="<%= post.title %>" value = "<%= post.title %>">
         </div>
         <div class="col-md-6">
           <label for="project_link" class="form-label">Project Link</label>
-          <input type="url" class="form-control" id="project_link" name="project_link" placeholder="<%= post.project_link %>">
+          <input type="text" class="form-control" id="project_link" name="project_link" placeholder="<%= post.project_link %>" value = "<%= post.project_link %>">
         </div>
         <div class="col-12">
           <label for="descr" class="form-label">Description</label>
-          <input type="text" class="form-control" id="descr" name="descr" placeholder="<%= post.descr %>">
+          <input type="text" class="form-control" id="descr" name="descr" placeholder="<%= post.descr %>" value = "<%= post.descr %>">
         </div>
         <div class="col-12">
           <label for="code_block" class="form-label">Code Block</label>
-          <textarea class="form-control" id="code_block" name="code_block" rows="3" placeholder="<%= post.code_block %>"></textarea>
+          <textarea class="form-control" id="code_block" name="code_block" rows="3" placeholder="<%= post.code_block %>"><%= post.code_block %></textarea>
         </div>
         <div class="col-12">
           <button type="submit" class="btn btn-outline-info">Save</button>

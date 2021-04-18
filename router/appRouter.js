@@ -15,11 +15,9 @@ router.get('/', async (req, res) => {
     for(let i = 0; i < posts.length; i ++) {
         let likes = await Post.getLikes(posts[i].id);
         let comments = await Post.getComments(posts[i].id);
-        let viewpost = await Post.getPost(posts[i].id)
         posts[i].likes = likes;
         posts[i].likeCount = likes.length;
         posts[i].comments = comments;
-        posts[i].viewpost = [viewpost];
         console.log(posts[i].likeCount);
     }
     
@@ -136,7 +134,7 @@ router.get("/post/:id/edit", async (req, res) =>{
 })
 
 router.patch('/post/:id/edit', async (req, res) => {
-    debugger;
+    // debugger;
     await Post.editPost(req.params, req.body)
     res.redirect('/profile')
 })

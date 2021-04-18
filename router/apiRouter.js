@@ -28,6 +28,8 @@ router.delete('/comments/:id', postsController.deleteCommentAPI);
 
 router.get('/comments', postsController.getComments);
 
+router.get('/comments/userComment', postsController.getCommentId);
+
 router.get('/events', async (req, res) => {
     const events = await Events.getEvents();
 

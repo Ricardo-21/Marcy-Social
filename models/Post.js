@@ -11,7 +11,7 @@ class Post {
     }
 
     static allPosts(){
-        let queryText = 'SELECT * FROM posts'
+        let queryText = 'SELECT posts.id, user_id, title, descr, project_link, code_block, username FROM posts, users WHERE user_id = users.id ORDER BY id DESC;'
         return db.query(queryText).then(posts => posts.rows);
     }
 
@@ -22,7 +22,7 @@ class Post {
     }
 
     static allUsersPost(user_id){
-        const queryText = "SELECT * FROM posts where user_id = $1"
+        const queryText = "SELECT * FROM posts where user_id = $1 ORDER BY id DESC"
         return db.query(queryText, [user_id]).then(post => post.rows)
     }
 
@@ -50,6 +50,12 @@ class Post {
         return db.query(queryText, [comment_id]).then(comment => comment.rows[0]);
     }
 
+    static getCommentId(user_id, post_id, commentText){
+        const queryText = "SELECT * FROM comments WHERE user_id = $1 AND post_id = $2 AND initial_comment = $3";
+
+        return db.query(queryText, [user_id, post_id, commentText]).then(comment => comment.rows[0]);
+    }
+
     static deleteComment(comment_id) {
         const queryText = "DELETE FROM comments WHERE id = $1";
 
@@ -69,7 +75,7 @@ class Post {
 
     static editPost(post, body) {
         const queryText = "UPDATE posts SET title = $1, descr = $2, project_link = $3, code_block = $4 WHERE id = $5 RETURNING *";
-        debugger;
+        // debugger;
         let title = body.title || post.title;
         let descr = body.descr || post.descr
         let project_link = body.project_link || post.project_link;
