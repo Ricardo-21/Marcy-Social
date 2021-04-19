@@ -65,16 +65,28 @@ router.get('/logout', (req, res) => {
   })
 
 router.post('/register', async (req, res) => {
-    bcrypt.hash(req.body.password, 10, (err, hash) => {
-        if(err){
-            res.send("error", error);
+    let usernames = await User.getUserUsername(req.body.username)
+    debugger;
+    try {
+        if(!usernames){
+            bcrypt.hash(req.body.password, 10, (err, hash) => {
+            if(err){
+                res.send("error", error);
+            }
+            else {
+                req.body.encrypt = hash;
+                Auth.register(req.body);
+                res.render('thankyou', {name: req.body.firstname})
+            }
+            })
         }
         else {
-            req.body.encrypt = hash;
-            Auth.register(req.body);
-            res.render('thankyou', {name: req.body.firstname})
+            throw Error('this username is already taken.')
         }
-    })
+
+    } catch(error) {
+        res.render('register', {message: error.message})
+    }
 })
 
 router.get('/createPost', (req, res) => {
@@ -86,6 +98,8 @@ router.post('/createPost', postsController.createPost)
 
 router.get('/profile', async (req, res) => {
     const user = await User.getUser(req.session.user.id)
+    // const userAPI = req.session.user.api_key
+
     // debugger;
     if(user) {
         let posts = await Post.allUsersPost(user.id)
@@ -98,7 +112,7 @@ router.get('/profile', async (req, res) => {
             posts[i].comments = comments;
             console.log(posts[i].likeCount);
         }
-        
+        user.api_key = req.session.user.api_key
         res.render('userProfile', {user, posts})
     }
     else {
@@ -145,9 +159,13 @@ router.get('/profile/edit', (req, res) => {
 })
 
 router.patch('/profile/edit', async (req, res) => {
-    const userId = req.session.user.id;
-    await User.editUser(userId, req.body)
+    const user = await User.getUser(req.session.user.id);
+    await User.editUser(user, req.body)
     res.redirect('/profile')
+})
+
+router.get('*', (req, res) => {
+    res.sendStatus(404);
 })
 
 module.exports = router;
