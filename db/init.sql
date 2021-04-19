@@ -37,22 +37,22 @@ CREATE TABLE likes (
     );
 
 
--- DROP TABLE IF EXISTS events;
+DROP TABLE IF EXISTS events;
 
--- CREATE TABLE events (
--- 	id SERIAL PRIMARY KEY,
--- 	event TEXT,
--- 	start_date DATE,
--- 	end_date DATE
--- );
+CREATE TABLE events (
+	id SERIAL PRIMARY KEY,
+	event TEXT,
+	start_date DATE,
+	end_date DATE
+);
 
--- INSERT INTO events (event, start_date, end_date) VALUES 
--- 	('Family Friday', TO_DATE('23/04/2021', 'DD/MM/YYYY'), null),
--- 	('Leadership Seminar', TO_DATE('30/04/2021', 'DD/MM/YYYY'), null),
--- 	('Leadership Seminar', TO_DATE('07/05/2021', 'DD/MM/YYYY'), null),
--- 	('Civic Hackathon', TO_DATE('10/05/2021', 'DD/MM/YYYY'), TO_DATE('28/05/2021', 'DD/MM/YYYY')),
--- 	('Leadership Seminar', TO_DATE ('14/05/2021', 'DD/MM/YYYY'), null),
--- 	('Demo Day', TO_DATE('28/05/2021', 'DD/MM/YYYY'), null),
--- 	('Memorial Day', TO_DATE('31/05/2021', 'DD/MM/YYYY'), null),
--- 	('Summer Break', TO_DATE('01/06/2021', 'DD/MM/YYYY'), TO_DATE('11/06/2021', 'DD/MM/YYYY')),
--- 	('Practicum + Capstone', TO_DATE('14/06/2021', 'DD/MM/YYYY'), TO_DATE('03/09/2021', 'DD/MM/YYYY'));
+INSERT INTO events (event, start_date, end_date) VALUES 
+	('Family Friday', TO_DATE('23/04/2021', 'DD/MM/YYYY'), null),
+	('Leadership Seminar', TO_DATE('30/04/2021', 'DD/MM/YYYY'), null),
+	('Leadership Seminar', TO_DATE('07/05/2021', 'DD/MM/YYYY'), null),
+	('Civic Hackathon', TO_DATE('10/05/2021', 'DD/MM/YYYY'), TO_DATE('28/05/2021', 'DD/MM/YYYY')),
+	('Leadership Seminar', TO_DATE ('14/05/2021', 'DD/MM/YYYY'), null),
+	('Demo Day', TO_DATE('28/05/2021', 'DD/MM/YYYY'), null),
+	('Memorial Day', TO_DATE('31/05/2021', 'DD/MM/YYYY'), null),
+	('Summer Break', TO_DATE('01/06/2021', 'DD/MM/YYYY'), TO_DATE('11/06/2021', 'DD/MM/YYYY')),
+	('Practicum + Capstone', TO_DATE('14/06/2021', 'DD/MM/YYYY'), TO_DATE('03/09/2021', 'DD/MM/YYYY'));
