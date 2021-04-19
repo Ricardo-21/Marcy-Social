@@ -86,6 +86,7 @@ function commentMade(e) {
     addCommentFetch(e.target.attributes.alt.value.substring(4), e.target.id.substring(4), commentTxt);
     comment.innerText = username;
     p.innerHTML = `<b>${commentTxt}<b> `;
+    p.style.color = 'black';
     p.append(button);
 
     div.append(comment, p);
@@ -112,14 +113,14 @@ function heartClick(e) {
         e.target.style.color = '';
         let num = parseInt(e.target.parentNode.children[1].innerText)
         num -= 1;
-        e.target.parentNode.children[1].innerText = num.toString();
+        e.target.parentNode.children[1].innerText = ` ${num}`;
         likeUnlike(e.target.attributes.alt.value, e.target.id);
     }
     else {
         e.target.style.color = 'blue';
         let num = parseInt(e.target.parentNode.children[1].innerText)
         num += 1;
-        e.target.parentNode.children[1].innerText = num.toString();
+        e.target.parentNode.children[1].innerText = ` ${num}`;
         likeUnlike(e.target.attributes.alt.value, e.target.id);
     }
 }

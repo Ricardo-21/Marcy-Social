@@ -22,19 +22,19 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    <img src="<%= otherUser.photo_src %>" alt=""/>
+                    <img src="<%= otherUser.photo_src %>"/>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="profile-head">
                             <h5>
-                                <%= otherUser.firstname %>, <%= otherUser.lastname %>
+                                <%= otherUser.firstname %>, <%= otherUser.lastname %> <i class="fal fa-badge-check"></i>
                             </h5>
                             <h6>
                                 Fullstack Developer
                             </h6>
                             <p class="proile-rating">USERNAME : <span>@<%= otherUser.username %></span></p>
-                            <p class="proile-rating">BIO GOES HERE.....</p>
+                            <p class="proile-rating">BIO: <%= otherUser.bio %></p>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <!-- <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#about" role="tab" aria-controls="home" aria-selected="true">About</a>
@@ -47,18 +47,18 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
-
-            </div>
+            <div class="col-md-4"></div>
             <div class="col-md-8">
                 <div class="tab-content profile-tab" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-
-                        <br>
                     <% for (const post of posts) { %>
                         <div class="card" style="width: 40rem;">
                             <div class="card-body">
-                              <p class="card-title text-end text-muted">1 day ago</p>
+                              <p class="card-title text-end">
+                                <a href="" class="card-link viewpost" data-toggle="modal" data-target="#myModal<%= post.id %>">
+                                  view post
+                                </a>
+                              </p>
                               <% 
                               let isLiked = false
                               for (like of post.likes) {  
@@ -68,17 +68,14 @@
                               }
                               if(isLiked){
                             %>
-                            <h5 class="card-title"> <%= post.title %> <i class="far fa-heart-circle" style="cursor: pointer; color: blue" id = "<%= post.id %>" alt = "<%= user.id %>"><%= post.likeCount %></i></h5>
+                            <h5 class="card-title"> <%= post.title %> <i class="far fa-heart-circle" style="cursor: pointer; color: blue" id = "<%= post.id %>" alt = "<%= user.id %>"></i><span> <%= post.likeCount %></span></h5>
                             <% } else {%>
-                              <h5 class="card-title"> <%= post.title %> <i class="far fa-heart-circle" style="cursor: pointer;" id = "<%= post.id %>" alt = "<%= user.id %>"><%= post.likeCount %></i></h5>
+                              <h5 class="card-title"> <%= post.title %> <i class="far fa-heart-circle" style="cursor: pointer;" id = "<%= post.id %>" alt = "<%= user.id %>"></i><span> <%= post.likeCount %></span></h5>
                             <%}%>
                               <!-- <h6 class="card-subtitle mb-2 text-muted"> @user </h6> -->
                               <p class="card-text"> <%= post.descr %> </p>
                               <h6 class="card-subtitle mb-2"><a href="<%= post.project_link %>" class="card-link"><%= post.project_link %> </a></h6>
                               <a href="" class="card-link viewpost" data-toggle="modal" data-target="#commentModal<%= post.id %>">comments</a>
-                              <a href="" class="card-link viewpost" data-toggle="modal" data-target="#myModal<%= post.id %>">
-                                view post
-                              </a>
                               </form>
                             </div>
                         </div>
@@ -138,7 +135,7 @@
                                         <p> <%= post.descr %> </p>
                                         <div style="background-color: #eff0f1;">
                                           <% if (post.code_block !== null) {%>
-                                            <pre><code> <%- post.code_block.replace(/\n/g, '<br>') %> </code></pre>
+                                            <pre><%= post.code_block %></pre>
                                           <% } %>
                                         </div>
                                     </div>

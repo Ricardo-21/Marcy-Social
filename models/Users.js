@@ -24,9 +24,13 @@ class User {
         return db.query(queryText, [username]).then(user => user.rows[0]);
     }
 
-    static editUser(id, body){
+    static editUser(user, body){
         const queryText = "UPDATE users SET photo_src = $1, bio = $2 WHERE id = $3 RETURNING *"
-        return db.query(queryText, [body.photo_src, body.bio, id]).then(results => results.rows[0])
+        
+        let photoSrc = body.photo_src === '' ? user.photo_src : body.photo_src
+        let bio = body.bio === '' ? user.bio : body.bio
+
+        return db.query(queryText, [photoSrc, bio, user.id]).then(results => results.rows[0])
     }
 
     

@@ -50,7 +50,7 @@ function userCard(user_obj) {
     card.innerHTML = `
     <div class="text-center card-box" id = '${user_obj.username.toLowerCase()}'>
         <div class="member-card pt-2 pb-2">
-            <div class="thumb-lg member-thumb mx-auto"><img src="${user_obj.photo_src || 'https://st.depositphotos.com/1915171/5109/v/600/depositphotos_51091665-stock-illustration-coder-sign-icon-programmer-symbol.jpg'}" class="rounded-circle img-thumbnail" alt="profile-image"></div>
+            <div class="thumb-lg member-thumb mx-auto"><img src="${user_obj.photo_src}" class="rounded-circle img-thumbnail" alt="profile-image" style="width: 100%; height: 100%;"></div>
             <div class="">
                 <h4>${user_obj.firstname} ${user_obj.lastname}</h4>
                 <p class="text-muted">@${user_obj.username}

@@ -70,7 +70,8 @@ class Post {
 
     static deletePost(post_id) {
         const queryText = "DELETE FROM posts WHERE id = $1";
-        db.query(queryText, [post_id]);
+        db.query(`DELETE FROM comments WHERE post_id = ${post_id}`)
+        return db.query(queryText, [post_id]);
     }
 
     static editPost(post, body) {
